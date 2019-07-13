@@ -4,13 +4,15 @@ field = ["margin", "year", "principle", "button", "profit", "sep"]
 node = {}
 
 
-def cal():
+def cal(e=0):
     global node
     try:
         margin = float(node["margin"].get())
         year = float(node["year"].get())
         principle = float(node["principle"].get())
-        node["profit"].set(principle * (margin ** year))
+        total = principle * (margin ** year)
+        node["profit"].set(f"Total:{total:,.6f}\nDividend:{total - principle:,.6f}")
+
     except:
         node["profit"].set("Invalid Data")
 
@@ -33,6 +35,7 @@ def start():
             Label(root, text=f"{c}:").grid(row=i, column=0, sticky=E)
             node[c] = StringVar()
             Entry(root, textvariable=node[c], width=20).grid(row=i, column=1, pady=5)
+    root.bind("<Return>", cal)
     return root
 
 
